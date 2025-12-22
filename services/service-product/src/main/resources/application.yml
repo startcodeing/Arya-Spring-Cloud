@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: service-product
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+      eager: true
+
+
+
+server:
+  port: 9090

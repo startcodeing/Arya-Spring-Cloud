@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.PrintWriter;
 
+/**
+ * 重写Sentinel的BlockExceptionHandler，统一处理Controller限流异常
+ */
 @Component
 public class MyBlockExceptionHandler implements BlockExceptionHandler {
 
@@ -19,7 +22,7 @@ public class MyBlockExceptionHandler implements BlockExceptionHandler {
         httpServletResponse.setContentType("application/json;charset=utf-8");
         PrintWriter writer = httpServletResponse.getWriter();
 
-        httpServletResponse.setStatus(429);
+        //httpServletResponse.setStatus(429);
         AjaxResult<String> error = AjaxResult.error("系统繁忙，请稍后再试：" + e.getClass());
         writer.write(JSON.toJSONString(error));
         writer.flush();

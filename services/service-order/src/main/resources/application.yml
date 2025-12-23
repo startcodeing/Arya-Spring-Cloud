@@ -15,6 +15,7 @@ spring:
         import-check:
           enabled: false
         #指定读取配置中心那个命名空间内的配置,这里建议使用命名空间ID，使用名称会抱config is Empty
+        # 多环境自动切换可以通过配置${spring.profiles.active}和当前激活的配置相结合,但是目前使用namespace名称加载不到配置，待后续排查
         namespace: 4c166165-1702-4dc3-bd29-55f25274a91f
         server-addr: 127.0.0.1:8848
         group: order

@@ -16,11 +16,14 @@ public class ProductServiceConfig {
     }
 
 
+    //OpenFegin客户端的日志级别
     @Bean
     Logger.Level feignLoggerLevel(){
         return Logger.Level.FULL;
     }
 
+
+    //OpenFegin默认的重启器，默认重试5次，每次的间隔时间为前一次时间的1.5倍，初始的间隔时间为100ms
     @Bean
     Retryer retryer(){
         return new Retryer.Default();

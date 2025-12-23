@@ -1,5 +1,6 @@
 package com.arya.order.service.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.arya.order.Order;
 import com.arya.order.feign.ProductFeignClient;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    //@SentinelResource(value = "createOrder",blockHandler = "createIrderFallbackHandler")
+    @SentinelResource(value = "createOrder",blockHandler = "createIrderFallbackHandler")
     public Order createOrder(Long productId, Long userId) {
 
         Product product = productFeignClient.getProductById(productId);

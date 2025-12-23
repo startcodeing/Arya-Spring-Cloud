@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+//RefreshScope + Value注解确保配置自动刷新，这种方式比较麻烦，可使用ConfigurationProperties(Prefix="order")的方式批量绑定
+//@RefreshScope
 @Slf4j
 @RestController
 public class OrderController {
@@ -20,9 +22,16 @@ public class OrderController {
     @Autowired
     private OrderProperties orderProperties;
 
+    //    @Value("${order.timeout}")
+    //    String orderTimeout;
+    //
+    //    @Value("${order.auto-confirm}")
+    //    String orderAutoConfirm;
+
 
     @GetMapping("/getConfig")
     public String getConfig() {
+        //return "orderTimeout :" + orderTimeout + ",orderAutoConfirm:" + orderAutoConfirm;
         return "orderTimeout: " + orderProperties.getTimeout() +
                 ", orderAutoConfirm: " + orderProperties.getAutoConfirm() +
                 ", dbUrl: " + orderProperties.getDbUrl();
@@ -41,13 +50,13 @@ public class OrderController {
      */
     @GetMapping("/create/kill")
     // 自定义流控埋点
-    @SentinelResource(value = "kill-order", fallback =  "killOrderFallback")
+    @SentinelResource(value = "kill-order", fallback = "killOrderFallback")
     public Order createKillOrder(@RequestParam("userId") Long userId, @RequestParam("productId") Long productId) {
         return orderService.createOrder(productId, userId);
     }
 
     public Order killOrderFallback(Long userId, Long productId, Throwable e) {
-        log.info("killOrderFallback,userId:{},productId:{}",userId,productId,e);
+        log.info("killOrderFallback,userId:{},productId:{}", userId, productId, e);
         Order order = new Order() {{
             setId(-1L);
             setAddress("商品已下架");
@@ -63,6 +72,7 @@ public class OrderController {
     public String writeData() {
         return "write data success";
     }
+
     /**
      * 读数据
      */
@@ -71,7 +81,6 @@ public class OrderController {
         log.info("read success......");
         return "read data success";
     }
-
 
 
 }

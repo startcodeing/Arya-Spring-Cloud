@@ -1,13 +1,21 @@
 spring:
   application:
     name: service-product
+
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
-    sentinel:
-      transport:
-        dashboard: localhost:8858
-      eager: true
+      discovery:
+        server-addr: localhost:8848
+        group: DEFAULT_GROUP
+      config:
+        #统一引入了Nacos-Config的依赖，但是项目中没有使用,可以使用如下配置禁用
+        import-check:
+          enabled: false
+        server-addr: localhost:8848
+#    sentinel:
+#      transport:
+#        dashboard: localhost:8858
+#      eager: true
 
 
 

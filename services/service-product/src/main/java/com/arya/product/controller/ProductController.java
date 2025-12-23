@@ -17,8 +17,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+
     /**
-     * 查询商品
+     * Query Product Detail
+     *
+     * @param id productId
+     * @return product detail
      */
     @GetMapping("/getProduct/{id}")
     public Product getProduct(@PathVariable Long id) {
